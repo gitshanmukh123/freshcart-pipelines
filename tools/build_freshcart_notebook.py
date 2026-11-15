@@ -83,8 +83,8 @@ from freshcart_lib import (
     execute_statements,
     expected_baseline,
     insert_crm_events,
-    insert_mock_orders,
     load_crm_history,
+    load_file,
     print_quality,
     quality_report,
     refresh_clean,
@@ -92,6 +92,7 @@ from freshcart_lib import (
     run_query,
     scalar,
     setup_snowflake,
+    write_landing,
 )
 
 print("Repo root:", ROOT)
@@ -191,14 +192,22 @@ print("Schemas:", run_query(conn, "SHOW SCHEMAS IN DATABASE FRESHCART"))
     md(
         """
 ### B1. Land reconstructed raw data and build CLEAN
-The fixture has 8 raw rows: 6 website rows plus 2 mobile updates. `ORD-1003`
-website has a NULL amount and is superseded later by the mobile row. Rewrite
-this section with your own explanation before submission.
+This cell writes timestamped NDJSON with `write_landing`, `PUT`s it to the
+Snowflake stage, and uses `COPY INTO` through `load_file`. The fixture has 8 raw
+rows: 6 website rows plus 2 mobile updates. `ORD-1003` website has a NULL amount
+and is superseded later by the mobile row. Rewrite this section with your own
+explanation before submission.
 """
     ),
     code(
         """
-raw_count = insert_mock_orders(conn)
+import pandas as pd
+
+execute_statements(conn, "TRUNCATE TABLE FRESHCART.RAW.ORDERS;")
+batch_file = write_landing(conn, pd.DataFrame(MOCK_ORDERS))
+print("Landed file:", batch_file)
+print("COPY result:", load_file(conn, batch_file))
+raw_count = scalar(conn, "SELECT COUNT(*) FROM FRESHCART.RAW.ORDERS")
 print("RAW rows:", raw_count)
 print(run_query(conn, "SELECT channel, COUNT(*) FROM FRESHCART.RAW.ORDERS GROUP BY channel ORDER BY channel"))
 print(SQL_10_ORDERS_CLEAN[:1200])
