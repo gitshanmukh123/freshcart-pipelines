@@ -9,7 +9,7 @@ Commands assume Windows PowerShell unless a cell says otherwise.
 |---|---|
 | Source, tests, SQL, Mage blocks, stream scripts, notebook JSON | Implemented |
 | Local pytest | 15 passed |
-| GitHub repository / Actions | Not yet pushed from this workspace |
+| GitHub repository / Actions | Pushed; initial, A3 red, and A3 green runs recorded in `EVIDENCE.md` |
 | Snowflake run | Pending personal credentials |
 | Mage UI run | Pending Mage installation |
 | Live RabbitMQ run | Pending broker URL |
@@ -66,6 +66,10 @@ Never stage `Assignment_DE.docx.pdf`, `.env`, generated CSV/pickle files,
 `stream/logs`, or `stream/lakehouse`.
 
 ## 3. A3 red/green test and Actions evidence
+
+The three real Actions runs are already listed in `EVIDENCE.md`. Reproduce the
+procedure below if you change the repository, and use the real links rather than
+copying a URL from another run.
 
 1. Confirm the clean state:
 

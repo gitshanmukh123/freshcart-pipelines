@@ -37,6 +37,7 @@ freshcart-pipelines/
 ├── requirements-mage.txt
 ├── ASSUMPTIONS.md
 ├── EXECUTION_GUIDE.md
+├── EVIDENCE.md
 └── README.md
 ```
 
@@ -129,8 +130,9 @@ Add `--snowflake` to load `RAW.ORDER_EVENTS_RAW` and `GOLD.ORDER_EVENTS`.
 ## Status and evidence rules
 
 - Code and tests are committed.
-- Do not claim Snowflake, Mage UI, RabbitMQ, or GitHub Actions outputs until they
-  have actually run.
+- Local tests and the initial/A3 GitHub Actions runs are recorded in `EVIDENCE.md`.
+- Do not claim Snowflake, Mage UI, or RabbitMQ outputs until they have actually
+  run.
 - Do not paste screenshots from a different run or fabricate commit hashes.
 - Keep B4/D1 predictions and all report explanations student-owned.
 - Never commit `.env`, the broker URL, Snowflake passwords, API keys, the reference

@@ -113,7 +113,7 @@ is `ORD-FUTURE-TEST` with `2099-01-01`; it is inserted, detected, and deleted.
 |---|---|
 | Repository source, tests, SQL, scripts, notebook JSON | Implemented locally |
 | Local pytest suite | Last run: 15 passed |
-| GitHub Actions | Pending push/run |
+| GitHub Actions | Initial, A3 red, and A3 green runs recorded in `EVIDENCE.md` |
 | Snowflake notebook execution | Pending user credentials |
 | Mage UI runs and C2 screenshots | Pending Mage installation |
 | RabbitMQ ACK/NACK logs | Pending live broker |
