@@ -1,0 +1,36 @@
+# Secrets and environment
+.env
+*.env
+*.pem
+*.key
+
+# Data and generated artifacts
+*.csv
+*.pkl
+*.joblib
+*.gz
+landing/
+stream/logs/
+stream/lakehouse/
+mage.log
+iris_predictions.csv
+iris_metrics.csv
+iris_confusion_matrix.csv
+
+# Python and test caches
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Editor and OS files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Reference material that must not be submitted
+Assignment_DE.docx.pdf
+*.docx.pdf

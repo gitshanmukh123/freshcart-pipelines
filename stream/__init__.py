@@ -1,0 +1,1 @@
+"""RabbitMQ streaming package."""
