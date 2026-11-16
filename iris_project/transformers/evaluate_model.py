@@ -18,48 +18,31 @@ if "test" not in globals():
 
 
 @transformer
-def evaluate(data: dict, *args, **kwargs) -> dict:
-    """Build a confusion matrix and a metrics table for the trained model."""
-    from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+def evaluate(df: pd.DataFrame, *args, **kwargs) -> pd.DataFrame:
+    from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
 
-    labels = [0, 1, 2]
-    y_true = data["y_test"]
-    y_pred = data["predictions"]
+    y_true = df["target"]
+    y_pred = df["predicted"]
 
-    matrix = confusion_matrix(y_true, y_pred, labels=labels)
-    matrix_frame = pd.DataFrame(
-        matrix,
-        index=[f"actual_{label}" for label in labels],
-        columns=[f"predicted_{label}" for label in labels],
+    print("Confusion matrix:")
+    print(pd.crosstab(y_true, y_pred, rownames=["actual"], colnames=["predicted"]))
+
+    metrics = pd.DataFrame(
+        {
+            "metric": ["accuracy", "precision", "recall", "f1_score"],
+            "value": [
+                round(accuracy_score(y_true, y_pred), 3),
+                round(precision_score(y_true, y_pred, average="macro"), 3),
+                round(recall_score(y_true, y_pred, average="macro"), 3),
+                round(f1_score(y_true, y_pred, average="macro"), 3),
+            ],
+        }
     )
-    report = classification_report(
-        y_true,
-        y_pred,
-        labels=labels,
-        output_dict=True,
-        zero_division=0,
-    )
-    metrics_frame = (
-        pd.DataFrame(report)
-        .transpose()
-        .reset_index()
-        .rename(columns={"index": "label"})
-    )
-
-    matrix_frame.to_csv(kwargs.get("matrix_path", "iris_confusion_matrix.csv"), index=True)
-    metrics_frame.to_csv(kwargs.get("metrics_path", "iris_metrics.csv"), index=False)
-
-    print(f"accuracy={accuracy_score(y_true, y_pred):.4f}")
-    print(metrics_frame.to_string(index=False))
-
-    return {
-        "confusion_matrix": matrix_frame,
-        "metrics": metrics_frame,
-        "accuracy": float(accuracy_score(y_true, y_pred)),
-    }
+    print(metrics.to_string(index=False))
+    return metrics
 
 
 @test
-def test_output(output: dict, *args) -> None:
-    assert output["confusion_matrix"].shape == (3, 3)
-    assert 0.0 <= output["accuracy"] <= 1.0
+def test_output(output: pd.DataFrame, *args) -> None:
+    assert len(output) == 4
+    assert set(output["metric"]) == {"accuracy", "precision", "recall", "f1_score"}

@@ -22,17 +22,12 @@ def transform(df: pd.DataFrame, *args, **kwargs) -> pd.DataFrame:
     """Split Iris into stratified train and test partitions."""
     from sklearn.model_selection import train_test_split
 
-    train, test = train_test_split(
-        df,
-        test_size=0.2,
-        random_state=42,
-        stratify=df["target"],
-    )
+    train, test = train_test_split(df, test_size=0.2, random_state=42)
     train = train.copy()
     test = test.copy()
     train["split"] = "train"
     test["split"] = "test"
-    return pd.concat([train, test], ignore_index=True)
+    return pd.concat([train, test])
 
 
 @test

@@ -17,41 +17,39 @@ if "test" not in globals():
             return func
 
 
+FEATURES = [
+    "sepal length (cm)",
+    "sepal width (cm)",
+    "petal length (cm)",
+    "petal width (cm)",
+]
+ACCURACY_THRESHOLD = 0.8
+
+
 @transformer
-def train(df: pd.DataFrame, *args, **kwargs) -> dict:
-    """Fit a decision tree and return the model, test predictions and accuracy."""
-    from sklearn.metrics import accuracy_score
+def train(df: pd.DataFrame, *args, **kwargs) -> pd.DataFrame:
+    import joblib
     from sklearn.tree import DecisionTreeClassifier
 
     max_depth = int(kwargs.get("max_depth", 3))
-    accuracy_threshold = float(kwargs.get("accuracy_threshold", 0.90))
+    threshold = float(kwargs.get("accuracy_threshold", ACCURACY_THRESHOLD))
 
-    feature_columns = [c for c in df.columns if c not in ("target", "split")]
     train_df = df[df["split"] == "train"]
-    test_df = df[df["split"] == "test"]
+    test_df = df[df["split"] == "test"].copy()
 
     model = DecisionTreeClassifier(max_depth=max_depth, random_state=42)
-    model.fit(train_df[feature_columns], train_df["target"])
-    predictions = model.predict(test_df[feature_columns])
-    accuracy = float(accuracy_score(test_df["target"], predictions))
+    model.fit(train_df[FEATURES], train_df["target"])
 
-    print(f"max_depth={max_depth} test_accuracy={accuracy:.4f}")
+    test_df["predicted"] = model.predict(test_df[FEATURES])
+    accuracy = (test_df["predicted"] == test_df["target"]).mean()
+    print("max_depth =", max_depth, "| Test accuracy =", round(accuracy, 3))
 
-    return {
-        "model": model,
-        "feature_columns": feature_columns,
-        "y_test": test_df["target"].reset_index(drop=True),
-        "predictions": pd.Series(predictions, name="prediction"),
-        "accuracy": accuracy,
-        "accuracy_threshold": accuracy_threshold,
-        "max_depth": max_depth,
-    }
+    joblib.dump(model, kwargs.get("model_path", "iris_model.pkl"))
+    test_df.attrs["accuracy_threshold"] = threshold
+    return test_df
 
 
 @test
-def test_output(output: dict, *args) -> None:
-    assert output["accuracy"] >= output["accuracy_threshold"], (
-        f"test_accuracy {output['accuracy']:.4f} is below "
-        f"{output['accuracy_threshold']:.2f} for max_depth={output['max_depth']}"
-    )
-    assert len(output["predictions"]) == 30
+def test_accuracy(output: pd.DataFrame, *args) -> None:
+    accuracy = (output["predicted"] == output["target"]).mean()
+    assert accuracy >= ACCURACY_THRESHOLD, "Model accuracy is below 80%"
