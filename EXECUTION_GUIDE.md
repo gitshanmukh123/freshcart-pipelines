@@ -8,7 +8,7 @@ Commands assume Windows PowerShell unless a cell says otherwise.
 | Item | Status |
 |---|---|
 | Source, tests, SQL, Mage blocks, stream scripts, notebook JSON | Implemented |
-| Local pytest | 15 passed |
+| Local pytest | 18 passed |
 | GitHub repository / Actions | Pushed; initial, A3 red, and A3 green runs recorded in `EVIDENCE.md` |
 | Snowflake run | Pending personal credentials |
 | Mage UI run | Pending Mage installation |
@@ -29,7 +29,7 @@ python -m pytest -q
 python -c "import json; json.load(open('elt/freshcart_elt.ipynb', encoding='utf-8')); print('notebook JSON valid')"
 ```
 
-Expected: Python 3.12.x, `15 passed`, and `notebook JSON valid`.
+Expected: Python 3.12.x, `18 passed`, and `notebook JSON valid`.
 
 If `pytest` is missing, install it explicitly:
 
@@ -149,11 +149,11 @@ URL, and your own explanation of why the test is meaningful.
    ```
 
 3. Open `elt/freshcart_elt.ipynb`.
-4. Run the credentials cell. It asks for:
-   - Snowflake account identifier, for example `abc12345.us-east-1`
-   - user
-   - password
-5. Run the connection cell. Fix the account format if connection fails.
+4. Put `SNOWFLAKE_ACCOUNT`, `SNOWFLAKE_USER`, `SNOWFLAKE_ROLE`,
+   `SNOWFLAKE_WAREHOUSE`, `SNOWFLAKE_DATABASE` and
+   `SNOWFLAKE_AUTHENTICATOR=externalbrowser` in `.env`. Use a fresh
+   `SNOWFLAKE_DATABASE=FRESHCART_DE_LAB` for an isolated lab run.
+5. Run the connection cell and complete Google SSO in the browser.
 
 ### 4.3 Expected Snowflake results
 
@@ -162,12 +162,12 @@ URL, and your own explanation of why the test is meaningful.
 | B1 raw | 8 |
 | B1 valid / quarantine | 6 / 2 |
 | B2 dedup | 4 |
-| B3 `ORD-1006` reasons | `["invalid_quantity","unsupported_currency"]` |
+| B3 `ORD-1006` reasons | `["bad_email","bad_pincode","unsupported_currency"]` |
 | B4 baseline Gold | 4 rows, INR 7785, 126 points |
-| B4 after Arjun event | ORD-1002 Gold, 39 points, INR 7785, 146 points |
+| B4 after Arjun event | ORD-1002 Gold, 70 points, INR 7785, 161 points |
 | B4 first run changed rows | exactly 1 |
 | B4 repeat changed rows | 0 |
-| CRM history after B4 | 6 rows |
+| CRM history after B4 | 5 rows (CUST-02 has 2) |
 | B5 baseline checks | all 0 |
 | B5 future probe | 1 PROBLEM, then 0 PASS after delete |
 
@@ -217,7 +217,7 @@ default in `iris_project/transformers/train_model.py`:
 max_depth = int(kwargs.get("max_depth", 3))
 ```
 
-Use values 1, 2, 3, 5, and `None` (or remove the cap), run the pipeline each
+Use values 1, 2, 3, 4 and 5, run the pipeline each
 time, and record accuracy. Restore the default to 3 for submission. Alternatively,
 set `max_depth` through your Mage block configuration if your Mage version
 supports it.

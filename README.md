@@ -4,8 +4,10 @@ A reproducible course project covering Git/GitHub Actions, a Snowflake
 Bronze-to-Gold ELT pipeline, a Mage Iris pipeline, a RabbitMQ topic exchange with
 driver consumers, and an optional RabbitMQ-to-lakehouse bonus.
 
-> The FreshCart and Mage notebooks are **reconstructions** from the assignment
-> PDF, not recovered classroom originals. Read `ASSUMPTIONS.md` before submitting.
+> The FreshCart notebook is a sanitized copy of the classroom workbook: outputs
+> and classroom credentials were removed, and the B3/B4/B5 changes are student
+> work. The Mage blocks follow the classroom Iris pipeline. See
+> `ASSUMPTIONS.md` for the remaining assumptions.
 
 ## Repository map
 
@@ -30,7 +32,7 @@ freshcart-pipelines/
 │   ├── driver.py                     # ACK/NACK consumer
 │   ├── order_producer.py             # bonus FreshCart producer
 │   └── lakehouse_consumer.py         # bonus persist-before-ACK consumer
-├── tests/                            # 15 local tests
+├── tests/                            # local tests
 ├── tools/build_freshcart_notebook.py
 ├── requirements.txt                  # CI/local test dependencies
 ├── requirements-colab.txt
@@ -49,7 +51,7 @@ python -m pip install -r requirements.txt
 python -m pytest -q
 ```
 
-Expected local result: `15 passed`.
+Expected local result: `18 passed`.
 
 Open `elt/freshcart_elt.ipynb` in Colab/Jupyter and follow the cells. The
 notebook requests Snowflake credentials with `getpass`; do not paste credentials
@@ -64,7 +66,7 @@ into notebook cells.
 | B1 | 8-row fixture, CLEAN validation, expected 6 valid / 2 quarantine | Snowflake run output |
 | B2 | Dedup (4 rows), quarantine MERGE, duplicate check | Snowflake run output |
 | B3 | `unsupported_currency` final CLEAN definition | `ORD-1006` two-reason output |
-| B4 | SCD2 CRM history and Gold MERGE | Baseline 126, B4 146, no-change repeat |
+| B4 | SCD2 CRM history and Gold MERGE | Baseline 126, B4 161, no-change repeat |
 | B5 | Five baseline checks plus future-date probe | Six zero-check output |
 | C1-C4 | Mage blocks, metadata, CI test, fallback experiment | Mage UI diagrams/screenshots |
 | D1-D3 | Dispatcher, six drivers, topic matching tests, NACK path | Real ACK/NACK logs |
@@ -89,10 +91,11 @@ The CI workflow runs the same `pytest` command on every push and pull request.
 1. Upload or clone the repository into Colab.
 2. Install `requirements-colab.txt`.
 3. Run `elt/freshcart_elt.ipynb` from top to bottom.
-4. Enter the Snowflake account, user, and password through `getpass`.
+4. Set `SNOWFLAKE_ACCOUNT`, `SNOWFLAKE_USER`, and `SNOWFLAKE_AUTHENTICATOR=externalbrowser` in `.env`, then run the cells. Google SSO opens a browser for manual authentication.
 
-The notebook creates database `FRESHCART`, schemas `RAW`, `CLEAN`,
-`QUARANTINE`, `REF`, `CRM`, and `GOLD`, then runs B1-B5.
+The notebook creates the database named by `SNOWFLAKE_DATABASE` (default
+`FRESHCART`; set `FRESHCART_DE_LAB` for an isolated lab run) with schemas
+`bronze`, `silver`, `dim`, `ref`, `gold` and `quarantine`, then runs B1-B5.
 
 ### Mage
 

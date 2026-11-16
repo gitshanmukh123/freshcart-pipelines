@@ -7,7 +7,7 @@ listed explicitly and must not be described as complete.
 
 ```text
 python -m pytest -q
-15 passed
+18 passed
 ```
 
 The notebook JSON was generated and parsed successfully with Python's `json`
