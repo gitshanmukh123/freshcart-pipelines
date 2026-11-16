@@ -1,164 +1,194 @@
-"""Reconstructed FreshCart fixtures.
+"""FreshCart sample data copied from the classroom workbook."""
 
-These records mimic the classroom scenario described by the assignment PDF.
-They are reconstructed assumptions, not a recovered copy of the original
-instructor notebook.
-"""
+MOCK_WEB_ORDERS = [
+    {
+        "order_id": "ORD-1001",
+        "cust_email": " Priya.R@Gmail.com ",
+        "cust_name": "priya r",
+        "order_date": "2026-09-01",
+        "amount": "1,250.00",
+        "currency": "INR",
+        "pincode": "600041",
+        "updated_at": "2026-09-01 10:02:00",
+    },
+    {
+        "order_id": "ORD-1003",
+        "cust_email": "meera@outlook.com",
+        "cust_name": "MEERA S",
+        "order_date": "2026-09-02",
+        "amount": None,
+        "currency": "INR",
+        "pincode": "400050",
+        "updated_at": "2026-09-02 09:10:00",
+    },
+    {
+        "order_id": "ORD-1002",
+        "cust_email": "Arjun.K@Yahoo.in ",
+        "cust_name": "Arjun K",
+        "order_date": "2026-09-01",
+        "amount": "42.50",
+        "currency": "USD",
+        "pincode": "560034",
+        "updated_at": "2026-09-01 11:15:00",
+    },
+    {
+        "order_id": "ORD-1004",
+        "cust_email": "rahul.m@gmail.com",
+        "cust_name": "Rahul M",
+        "order_date": "Sep 3, 2026",
+        "amount": "-500",
+        "currency": "INR",
+        "pincode": "110001",
+        "updated_at": "2026-09-03 12:00:00",
+    },
+    {
+        "order_id": "ORD-1005",
+        "cust_email": "priya.r@gmail.com",
+        "cust_name": "Priya R.",
+        "order_date": "2026-09-03",
+        "amount": "₹ 899",
+        "currency": "inr",
+        "pincode": "600041",
+        "updated_at": "2026-09-03 16:45:00",
+    },
+    {
+        "order_id": "ORD-1006",
+        "cust_email": "vikram@@mail",
+        "cust_name": "Vikram",
+        "order_date": "2026-09-04",
+        "amount": 30,
+        "currency": "EUR",
+        "pincode": "99999",
+        "updated_at": "2026-09-04 08:30:00",
+    },
+]
+
+MOCK_MOBILE_ORDERS = [
+    {
+        "orderId": "ORD-1002",
+        "customer": {"email": "arjun.k@yahoo.in", "name": "Arjun K"},
+        "orderDate": "01/09/2026",
+        "total": {"value": "42.50", "currency": "usd"},
+        "deliveryPin": "560034",
+        "updatedAt": "2026-09-01T11:15:00",
+    },
+    {
+        "orderId": "ORD-1003",
+        "customer": {"email": "Meera@Outlook.com", "name": "Meera S"},
+        "orderDate": "02/09/2026",
+        "total": {"value": "2,100.00", "currency": "INR"},
+        "deliveryPin": "400050",
+        "updatedAt": "2026-09-02T18:40:00",
+    },
+]
 
 MOCK_ORDERS = [
     {
         "order_id": "ORD-1001",
-        "customer_id": "CUST-01",
-        "email": "priya.sharma@gmail.com",
-        "order_date": "2026-08-05 10:15:00",
-        "product": "Aashirvaad Atta 5kg",
-        "quantity": "2",
-        "unit_price": "749.50",
-        "amount": "1499.00",
+        "channel": "web",
+        "amount": "1,250.00",
         "currency": "INR",
-        "channel": "website",
-        "updated_at": "2026-08-05 10:15:00",
+        "order_date": "2026-09-01",
+        "cust_email": "priya.r@gmail.com",
     },
     {
         "order_id": "ORD-1002",
-        "customer_id": "CUST-02",
-        "email": "arjun.k@yahoo.in",
-        "order_date": "2026-08-16 09:00:00",
-        "product": "Tata Salt 1kg",
-        "quantity": "5",
-        "unit_price": "399.80",
-        "amount": "1999.00",
-        "currency": "INR",
-        "channel": "website",
-        "updated_at": "2026-08-16 09:00:00",
+        "channel": "mobile",
+        "amount": "42.50",
+        "currency": "USD",
+        "order_date": "2026-09-01",
+        "cust_email": "arjun.k@yahoo.in",
     },
     {
         "order_id": "ORD-1003",
-        "customer_id": "CUST-03",
-        "email": "meera.iyer@gmail.com",
-        "order_date": "2026-08-06 11:30:00",
-        "product": "Fortune Sunflower Oil 5L",
-        "quantity": "3",
-        "unit_price": "700.00",
-        "amount": None,
+        "channel": "mobile",
+        "amount": "2,100.00",
         "currency": "INR",
-        "channel": "website",
-        "updated_at": "2026-08-06 11:30:00",
-    },
-    {
-        "order_id": "ORD-1004",
-        "customer_id": "CUST-99",
-        "email": "test.user@example.com",
-        "order_date": "2026-08-07 12:00:00",
-        "product": "Invalid Quantity Item",
-        "quantity": "0",
-        "unit_price": "100.00",
-        "amount": "100.00",
-        "currency": "INR",
-        "channel": "website",
-        "updated_at": "2026-08-07 12:00:00",
+        "order_date": "2026-09-02",
+        "cust_email": "meera@outlook.com",
     },
     {
         "order_id": "ORD-1005",
-        "customer_id": "CUST-01",
-        "email": "priya.sharma@gmail.com",
-        "order_date": "2026-08-11 14:20:00",
-        "product": "Amul Butter 500g",
-        "quantity": "3",
-        "unit_price": "729.00",
-        "amount": "2187.00",
+        "channel": "web",
+        "amount": "1,899.00",
         "currency": "INR",
-        "channel": "website",
-        "updated_at": "2026-08-11 14:20:00",
-    },
-    {
-        "order_id": "ORD-1006",
-        "customer_id": "CUST-04",
-        "email": "rahul.verma@example.com",
-        "order_date": "2026-08-12 16:45:00",
-        "product": "Imported Olive Oil",
-        "quantity": "0",
-        "unit_price": "15.00",
-        "amount": "15.00",
-        "currency": "EUR",
-        "channel": "website",
-        "updated_at": "2026-08-12 16:45:00",
-    },
-    {
-        "order_id": "ORD-1002",
-        "customer_id": "CUST-02",
-        "email": "arjun.k@yahoo.in",
-        "order_date": "2026-08-16 09:00:00",
-        "product": "Tata Salt 1kg",
-        "quantity": "5",
-        "unit_price": "399.80",
-        "amount": "1999.00",
-        "currency": "INR",
-        "channel": "mobile_app",
-        "updated_at": "2026-08-16 09:05:00",
-    },
-    {
-        "order_id": "ORD-1003",
-        "customer_id": "CUST-03",
-        "email": "meera.iyer@gmail.com",
-        "order_date": "2026-08-06 11:30:00",
-        "product": "Fortune Sunflower Oil 5L",
-        "quantity": "3",
-        "unit_price": "700.00",
-        "amount": "2100.00",
-        "currency": "INR",
-        "channel": "mobile_app",
-        "updated_at": "2026-08-06 11:35:00",
+        "order_date": "2026-09-03",
+        "cust_email": "priya.r@gmail.com",
     },
 ]
 
 MOCK_CRM_TIER_EVENTS = [
     {
-        "event_id": "EVT-001",
-        "customer_id": "CUST-01",
-        "email": "priya.sharma@gmail.com",
+        "cust_id": "CUST-01",
+        "email": "priya.r@gmail.com",
         "tier": "Silver",
-        "effective_from": "2026-08-01 00:00:00",
+        "effective_from": "2023-04-10",
     },
     {
-        "event_id": "EVT-002",
-        "customer_id": "CUST-02",
+        "cust_id": "CUST-01",
+        "email": "priya.r@gmail.com",
+        "tier": "Gold",
+        "effective_from": "2026-09-03",
+    },
+    {
+        "cust_id": "CUST-02",
         "email": "arjun.k@yahoo.in",
-        "tier": "Bronze",
-        "effective_from": "2026-08-01 00:00:00",
+        "tier": "Silver",
+        "effective_from": "2024-01-15",
     },
     {
-        "event_id": "EVT-003",
-        "customer_id": "CUST-03",
-        "email": "meera.iyer@gmail.com",
-        "tier": "Gold",
-        "effective_from": "2026-08-01 00:00:00",
-    },
-    {
-        "event_id": "EVT-004",
-        "customer_id": "CUST-04",
-        "email": "rahul.verma@example.com",
-        "tier": "Bronze",
-        "effective_from": "2026-08-01 00:00:00",
-    },
-    {
-        "event_id": "EVT-005",
-        "customer_id": "CUST-01",
-        "email": "priya.sharma@gmail.com",
-        "tier": "Gold",
-        "effective_from": "2026-08-10 00:00:00",
+        "cust_id": "CUST-03",
+        "email": "meera@outlook.com",
+        "tier": "Platinum",
+        "effective_from": "2022-11-01",
     },
 ]
 
 MOCK_CRM_EVENT_B4 = {
-    "event_id": "EVT-006",
-    "customer_id": "CUST-02",
+    "cust_id": "CUST-02",
     "email": "arjun.k@yahoo.in",
     "tier": "Gold",
-    "effective_from": "2026-08-15 00:00:00",
+    "effective_from": "2026-08-15",
 }
 
-MOCK_FX_RATES = [
-    {"currency": "INR", "rate_to_inr": "1.0"},
-    {"currency": "USD", "rate_to_inr": "83.0"},
+MOCK_FX_RESPONSES = [
+    {
+        "amount": 1.0,
+        "base": "USD",
+        "start_date": "2026-09-01",
+        "end_date": "2026-09-03",
+        "rates": {
+            "2026-09-01": {"INR": 83.20},
+            "2026-09-02": {"INR": 83.35},
+            "2026-09-03": {"INR": 83.10},
+        },
+    }
 ]
+
+MOCK_PINCODES = {
+    "600041": ("Chennai", "Tamil Nadu"),
+    "560034": ("Bengaluru", "Karnataka"),
+    "400050": ("Mumbai", "Maharashtra"),
+}
+
+
+def mock_pincode_response(pin):
+    """Reply in the same shape as the India Post API."""
+    if pin not in MOCK_PINCODES:
+        return [{"Message": "No records found", "Status": "Error", "PostOffice": None}]
+    district, state = MOCK_PINCODES[pin]
+    return [
+        {
+            "Message": "Number of pincode(s) found:1",
+            "Status": "Success",
+            "PostOffice": [
+                {
+                    "Name": district,
+                    "District": district,
+                    "State": state,
+                    "Country": "India",
+                    "Pincode": pin,
+                }
+            ],
+        }
+    ]
