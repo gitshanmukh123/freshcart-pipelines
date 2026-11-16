@@ -43,13 +43,13 @@ def process_delivery(channel, method, properties, body, name: str, counter: int)
         channel.basic_ack(delivery_tag=method.delivery_tag)
         print(
             f"ACK  {name} seq={counter} key={message.get('city')}."
-            f"{message.get('zone')}.{message.get('type')} id={message.get('message_id')}",
+            f"{message.get('zone')}.{message.get('type')} id={message.get('id')}",
             flush=True,
         )
     else:
         channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
         print(
-            f"NACK {name} seq={counter} reason=missing_zone id={message.get('message_id')}",
+            f"NACK {name} seq={counter} reason=missing_zone id={message.get('id')}",
             flush=True,
         )
 

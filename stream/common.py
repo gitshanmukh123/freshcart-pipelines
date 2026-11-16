@@ -70,11 +70,11 @@ def build_ride_message(
     omit_zone: bool = False,
 ) -> dict[str, Any]:
     message = {
-        "message_id": f"MSG-{sequence:06d}",
+        "id": f"MSG-{sequence:06d}",
         "city": city,
         "zone": zone,
         "type": service_type,
-        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "ts": datetime.now(timezone.utc).isoformat(),
         "sequence": sequence,
     }
     if omit_zone:
